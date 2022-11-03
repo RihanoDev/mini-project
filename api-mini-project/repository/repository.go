@@ -13,3 +13,8 @@ type ProductRepository interface {
 	Restore(id string) model.Product
 	ForceDelete(id string) bool
 }
+
+type AuthRepository interface {
+	Register(input model.UserInput) model.User
+	Login(input model.UserInput) string
+}
