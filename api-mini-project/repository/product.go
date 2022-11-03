@@ -12,7 +12,7 @@ type ProductRepositoryImpl struct{}
 func (p *ProductRepositoryImpl) GetAll() []model.Product {
 	var products []model.Product
 
-	config.DB.Find(&products)
+	config.DB.Preload("Category").Find(&products)
 
 	return products
 }
@@ -30,6 +30,8 @@ func (c *ProductRepositoryImpl) Create(input model.ProductInput) model.Product {
 		Name:        input.Name,
 		Price:       input.Price,
 		Description: input.Description,
+		CategoryID:  input.CategoryID,
+		Stock:       input.Stock,
 	}
 
 	var addedProduct model.Product = model.Product{}
@@ -47,6 +49,8 @@ func (u *ProductRepositoryImpl) Update(id string, input model.ProductInput) mode
 	product.Name = input.Name
 	product.Price = input.Price
 	product.Description = input.Description
+	product.CategoryID = input.CategoryID
+	product.Stock = input.Stock
 
 	config.DB.Save(&product)
 

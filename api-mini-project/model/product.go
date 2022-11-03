@@ -14,4 +14,7 @@ type Product struct {
 	Name        string         `json: "name" form: "name"`
 	Price       int            `json: "price" form: "price"`
 	Description string         `json: "description" form: "description"`
+	Category    Category       `json: "category" form: "category"`
+	CategoryID  uint           `json: "category_id" form: "category_id"`
+	Stock       uint           `json: "stock" form: "stock"`
 }

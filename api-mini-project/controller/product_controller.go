@@ -99,6 +99,6 @@ func ForceDelete(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{
-		"message": "Data  forcec deleted",
+		"message": "Data force deleted",
 	})
 }
