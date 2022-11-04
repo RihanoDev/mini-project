@@ -1,11 +1,13 @@
 package controller
 
 import (
+	"api-mini-project/auth"
 	"api-mini-project/model"
 	"api-mini-project/service"
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/golang-jwt/jwt"
+	"github.com/labstack/echo/v4"
 )
 
 var authService service.AuthService = service.NewAuthService()
@@ -59,5 +61,23 @@ func Login(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, map[string]string{
 		"token": token,
+	})
+}
+
+func Logout(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+
+	isListed := auth.CheckToken(user.Raw)
+
+	if !isListed {
+		return c.JSON(http.StatusUnauthorized, map[string]string{
+			"message": "Invalid Token",
+		})
+	}
+
+	auth.Logout(user.Raw)
+
+	return c.JSON(http.StatusOK, map[string]string{
+		"message": "Logout Success",
 	})
 }

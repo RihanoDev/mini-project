@@ -5,7 +5,7 @@ import (
 	"api-mini-project/service"
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 var ProductService service.ProductService = service.New()
@@ -39,6 +39,14 @@ func Create(c echo.Context) error {
 		})
 	}
 
+	err := input.Validate()
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "validation failed",
+		})
+	}
+
 	product := ProductService.Create(*input)
 
 	return c.JSON(http.StatusCreated, product)
@@ -50,6 +58,14 @@ func Update(c echo.Context) error {
 	if err := c.Bind(input); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
 			"message": "Invalid Request",
+		})
+	}
+
+	err := input.Validate()
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "validation failed",
 		})
 	}
 

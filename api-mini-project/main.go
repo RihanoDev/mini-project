@@ -5,7 +5,7 @@ import (
 	"api-mini-project/middlewares"
 	"api-mini-project/routes"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func main() {

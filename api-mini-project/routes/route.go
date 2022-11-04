@@ -2,10 +2,11 @@ package routes
 
 import (
 	"api-mini-project/controller"
+	"api-mini-project/middlewares"
 
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4/middleware"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // func New() *echo.Echo {
@@ -27,6 +28,9 @@ func SetupRoute(server *echo.Echo) {
 	privateRoutes.Use(middleware.JWTWithConfig(middleware.JWTConfig{
 		SigningKey: []byte("secretkey"),
 	}))
+
+	privateRoutes.Use(middlewares.CheckTokenMiddleware)
+
 	//private route
 	// privateRoutes.GET("/test", func(c echo.Context) error {
 	// 	return c.String(http.StatusOK, "authenticated!")
@@ -40,4 +44,7 @@ func SetupRoute(server *echo.Echo) {
 	privateRoutes.DELETE("/api/v1/products/:id", controller.Delete)
 	privateRoutes.POST("/api/v1/products/:id", controller.Restore)
 	privateRoutes.DELETE("/api/v1/products/force/:id", controller.ForceDelete)
+
+	//logout
+	privateRoutes.POST("/api/v1/users/logout", controller.Logout)
 }
