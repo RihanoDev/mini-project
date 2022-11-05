@@ -17,4 +17,5 @@ type ProductRepository interface {
 type AuthRepository interface {
 	Register(input model.UserInput) model.User
 	Login(input model.UserInput) string
+	CheckData(input model.UserInput) model.User
 }

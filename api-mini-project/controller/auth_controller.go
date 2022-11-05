@@ -29,6 +29,14 @@ func Register(c echo.Context) error {
 		})
 	}
 
+	registeredEmail := authService.CheckData(*userInput).Email
+
+	if userInput.Email == registeredEmail {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Email Already Used",
+		})
+	}
+
 	user := authService.Register(*userInput)
 
 	return c.JSON(http.StatusCreated, user)

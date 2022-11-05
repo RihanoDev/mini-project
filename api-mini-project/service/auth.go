@@ -22,3 +22,7 @@ func (a *AuthService) Register(input model.UserInput) model.User {
 func (a *AuthService) Login(input model.UserInput) string {
 	return a.Repository.Login(input)
 }
+
+func (a *AuthService) CheckData(input model.UserInput) model.User {
+	return a.Repository.CheckData(input)
+}

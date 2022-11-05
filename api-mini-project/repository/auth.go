@@ -48,3 +48,11 @@ func (l *AuthRepositoryImpl) Login(input model.UserInput) string {
 
 	return token
 }
+
+func (c *AuthRepositoryImpl) CheckData(input model.UserInput) model.User {
+	var data model.User = model.User{}
+
+	config.DB.Find(&data, "email = ?", input.Email)
+
+	return data
+}

@@ -20,7 +20,7 @@ func (p *ProductRepositoryImpl) GetAll() []model.Product {
 func (b *ProductRepositoryImpl) GetByID(id string) model.Product {
 	var product model.Product
 
-	config.DB.First(&product, "id = ?", id)
+	config.DB.Preload("Category").First(&product, "id = ?", id)
 
 	return product
 }
@@ -72,7 +72,7 @@ func (d *ProductRepositoryImpl) Delete(id string) bool {
 func (r *ProductRepositoryImpl) Restore(id string) model.Product {
 	var trashedProduct model.Product
 
-	config.DB.Unscoped().First(&trashedProduct, "id = ?", id)
+	config.DB.Unscoped().Preload("Category").First(&trashedProduct, "id = ?", id)
 
 	trashedProduct.DeletedAt = gorm.DeletedAt{}
 
