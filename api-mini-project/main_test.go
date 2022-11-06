@@ -51,13 +51,12 @@ func getJWTToken(t *testing.T) string {
 
 	var token string = response["token"]
 
-	var JWT_TOKEN = "Bearer" + token
+	var JWT_TOKEN = "Bearer " + token
 
 	return JWT_TOKEN
 }
 
 func TestRegister_Success(t *testing.T) {
-	config.InitTestDB()
 
 	var userRequest *model.UserInput = &model.UserInput{
 		Email:    "test@mail.com",
@@ -75,8 +74,6 @@ func TestRegister_Success(t *testing.T) {
 }
 
 func TestRegister_ValidationFailed(t *testing.T) {
-	config.InitTestDB()
-
 	var userRequest *model.UserInput = &model.UserInput{
 		Email:    "",
 		Password: "",
@@ -92,8 +89,6 @@ func TestRegister_ValidationFailed(t *testing.T) {
 }
 
 func TestLogin_Success(t *testing.T) {
-	config.InitTestDB()
-
 	user := config.SeedUser()
 
 	var userRequest *model.UserInput = &model.UserInput{
@@ -111,8 +106,6 @@ func TestLogin_Success(t *testing.T) {
 }
 
 func TestLogin_ValidationFailed(t *testing.T) {
-	config.InitTestDB()
-
 	var userRequest *model.UserInput = &model.UserInput{
 		Email:    "",
 		Password: "",
@@ -128,8 +121,6 @@ func TestLogin_ValidationFailed(t *testing.T) {
 }
 
 func TestLogin_Failed(t *testing.T) {
-	config.InitTestDB()
-
 	var userRequest *model.UserInput = &model.UserInput{
 		Email:    "lol@mail.com",
 		Password: "123123",
@@ -145,8 +136,6 @@ func TestLogin_Failed(t *testing.T) {
 }
 
 func TestCreateProduct_Success(t *testing.T) {
-	config.InitTestDB()
-
 	category := config.SeedCategory()
 
 	var productRequest *model.ProductInput = &model.ProductInput{
@@ -204,6 +193,8 @@ func TestGetProduct_NotFound(t *testing.T) {
 	var product model.Product = config.SeedProduct()
 
 	productID := strconv.Itoa(int(product.ID))
+
+	productID = "0"
 
 	var token string = getJWTToken(t)
 
