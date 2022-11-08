@@ -19,3 +19,12 @@ type AuthRepository interface {
 	Login(input model.UserInput) string
 	CheckData(input model.UserInput) model.User
 }
+
+type CategoryRepository interface {
+	GetAllCategories() []model.Category
+	GetCategoriesByID(id string) model.Category
+	CreateCategories(input model.CategoryInput) model.Category
+	UpdateCategories(id string, input model.CategoryInput) model.Category
+	ForceDeleteCategories(id string) bool
+	CheckDataCategories(input model.CategoryInput) model.Category
+}
