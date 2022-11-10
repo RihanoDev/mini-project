@@ -69,6 +69,7 @@ func (cl *ControllerList) Route(server *echo.Echo) {
 	})
 
 	category.GET("", cl.CategoryController.GetAllCategories)
+	category.GET("/:id", cl.CategoryController.GetCategoriesByID)
 	category.POST("", cl.CategoryController.CreateCategories)
 	category.PUT("/:id", cl.CategoryController.UpdateCategories)
 	category.DELETE("/:id", cl.CategoryController.DeleteCategories)
