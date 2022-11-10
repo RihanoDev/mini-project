@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"api-mini-project/app/middlewares"
 	"api-mini-project/controllers/categories"
 	"api-mini-project/controllers/products"
 	"api-mini-project/controllers/users"
+	"net/http"
 
 	"github.com/labstack/echo/v4/middleware"
 
@@ -28,6 +30,20 @@ func (cl *ControllerList) Route(server *echo.Echo) {
 
 	product := server.Group("/api/v1/products", middleware.JWTWithConfig(cl.JWTMiddleware))
 
+	product.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			userID := middlewares.GetUser(c)
+
+			if userID == nil {
+				return c.JSON(http.StatusUnauthorized, map[string]string{
+					"message": "Invalid Token",
+				})
+			}
+
+			return next(c)
+		}
+	})
+
 	product.GET("", cl.ProductController.GetAllProducts)
 	product.GET("/:id", cl.ProductController.GetProductByID)
 	product.POST("", cl.ProductController.CreateProduct)
@@ -37,6 +53,20 @@ func (cl *ControllerList) Route(server *echo.Echo) {
 	product.DELETE("/force/:id", cl.ProductController.ForceDeleteProduct)
 
 	category := server.Group("/api/v1/categories", middleware.JWTWithConfig(cl.JWTMiddleware))
+
+	category.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			userID := middlewares.GetUser(c)
+
+			if userID == nil {
+				return c.JSON(http.StatusUnauthorized, map[string]string{
+					"message": "Invalid Token",
+				})
+			}
+
+			return next(c)
+		}
+	})
 
 	category.GET("", cl.CategoryController.GetAllCategories)
 	category.POST("", cl.CategoryController.CreateCategories)
