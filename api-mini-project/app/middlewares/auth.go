@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -77,4 +78,18 @@ func Logout(token string) bool {
 	}
 
 	return true
+}
+
+func CheckTokenMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		userID := GetUser(c)
+
+		if userID == nil {
+			return c.JSON(http.StatusUnauthorized, map[string]string{
+				"message": "Invalid Token",
+			})
+		}
+
+		return next(c)
+	}
 }
