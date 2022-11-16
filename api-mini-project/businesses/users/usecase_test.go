@@ -62,3 +62,21 @@ func TestLogin(t *testing.T) {
 		assert.Empty(t, result)
 	})
 }
+
+func TestCheckData(t *testing.T) {
+	t.Run("CheckData | Valid", func(t *testing.T) {
+		usersRepository.On("CheckData", &usersDomain).Return(usersDomain).Once()
+
+		result := usersService.CheckData(&usersDomain)
+
+		assert.NotNil(t, result)
+	})
+
+	t.Run("CheckData | InValid", func(t *testing.T) {
+		usersRepository.On("CheckData", &usersDomain).Return(usersDomain).Once()
+
+		result := usersService.CheckData(&usersDomain)
+
+		assert.NotNil(t, result)
+	})
+}

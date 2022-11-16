@@ -113,3 +113,20 @@ func TestDelete(t *testing.T) {
 		assert.False(t, result)
 	})
 }
+func TestCheckData(t *testing.T) {
+	t.Run("CheckData | Valid", func(t *testing.T) {
+		categoryRepository.On("CheckData", &categoryDomain).Return(categoryDomain).Once()
+
+		result := categoryService.CheckData(&categoryDomain)
+
+		assert.NotNil(t, result)
+	})
+
+	t.Run("CheckData | InValid", func(t *testing.T) {
+		categoryRepository.On("CheckData", &categoryDomain).Return(categoryDomain).Once()
+
+		result := categoryService.CheckData(&categoryDomain)
+
+		assert.NotNil(t, result)
+	})
+}
