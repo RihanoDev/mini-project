@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS miniproject;
+CREATE DATABASE IF NOT EXISTS miniproject_test;
