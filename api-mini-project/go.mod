@@ -1,5 +1,6 @@
 module api-mini-project
 
+// +heroku goVersion go1.19
 go 1.19
 
 require (

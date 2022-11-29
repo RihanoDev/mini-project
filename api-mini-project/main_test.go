@@ -1,9 +1,6 @@
 package main
 
 import (
-	"api-mini-project/config"
-	"api-mini-project/model"
-	"api-mini-project/routes"
 	"encoding/json"
 	"net/http"
 	"strconv"
